@@ -253,6 +253,41 @@ public class Calculadora{
         }while(excecao == true);
 
     }
+
+    public static void calculaCargaCapacitor()
+    {
+        int carga, tensao, capacitancia;
+        boolean excecao = true;
+        Scanner s = new Scanner(System.in);
+        do
+        {
+            try
+            {
+                System.out.println("Digite a carga eletrica armazenada em coulombs(C): ");
+                carga = Integer.parseInt(s.nextLine());
+
+                System.out.println("Digite a tensao: ");
+                tensao = Integer.parseInt(s.nextLine());
+
+                capacitancia = carga/tensao;
+                System.out.println("Sua capacitância é: "+ capacitancia);
+                s.close();
+                excecao = false;
+
+
+            }
+            catch(Exception e)
+            {
+                excecao = true;
+                System.out.println("Invalido.");
+            }
+        }while(excecao == true);
+    }
+
+    public static void calculaDescargaCapacitor()
+    {
+        
+    }
     
     public static void menuCalculos()
     {
@@ -504,10 +539,19 @@ public class Calculadora{
                         calculaCustoEletricidade();
                         break;
                         
+                        case 9:
+                        calculaCargaCapacitor();
+                        break;
+
+                        case 10:
+                        //calculaDescargaCapacitor();
+                        break;
+
 
                     }
 
                 }while(opcao != 50);
+                s.close();
             }              
             
             catch (NumberFormatException ex){
@@ -543,6 +587,7 @@ public class Calculadora{
         
                 else
                     menuConversoes();
+                s.close();
 
             }
 
