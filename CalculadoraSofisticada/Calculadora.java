@@ -1,16 +1,17 @@
 import java.util.Scanner;
 
+public class Calculadora {
 
-public class Calculadora{
-
-    /// Essa função resolve um sistema linear pelo método de Gauss, que é um método de cálculo numérico (EC2).
-    /// A função recebe por parâmetro um sistema linear de 4 equações e 4 incógnitas em forma de matriz (array bidimensional).
-    /// O objetivo é descobrir o valor das incógnitas utilizando os coeficientes e as igualdades. 
-    public static void calculaGauss(double[][] matriz)
-    {
+    /// Essa função resolve um sistema linear pelo método de Gauss, que é um método
+    /// de cálculo numérico (EC2).
+    /// A função recebe por parâmetro um sistema linear de 4 equações e 4 incógnitas
+    /// em forma de matriz (array bidimensional).
+    /// O objetivo é descobrir o valor das incógnitas utilizando os coeficientes e
+    /// as igualdades.
+    public static void calculaGauss(double[][] matriz) {
         double[][] matrizDois = new double[3][4];
         double[][] matrizTres = new double[2][3];
-        
+
         // Calculando valores para a primeira linha da matriz dois.
         matrizDois[0][0] = (matriz[0][0] * matriz[1][1]) - (matriz[1][0] * matriz[0][1]);
         matrizDois[0][1] = (matriz[0][0] * matriz[1][2]) - (matriz[1][0] * matriz[0][2]);
@@ -43,17 +44,19 @@ public class Calculadora{
         matrizTres[1][2] = (matrizDois[0][0] * matrizDois[2][3]) - (matrizDois[2][0] * matrizDois[0][3]);
 
         // A matriz três está preenchida.
-        // Fazendo a multiplicação em cruz (mas invertendo o sinal dependendo do sentido da multiplicação, como se fosse calcular uma determinante),
-        // É possível descobrir o coeficiente de Z e o valor que está no outro lado do sinal de igual.
+        // Fazendo a multiplicação em cruz (mas invertendo o sinal dependendo do sentido
+        // da multiplicação, como se fosse calcular uma determinante),
+        // É possível descobrir o coeficiente de Z e o valor que está no outro lado do
+        // sinal de igual.
         // Exemplo: 4Z = 80
-        // A varíavel coeficiente no exemplo acima seria o 4 e a variável valorIgual no exemplo seria o 80.
+        // A varíavel coeficiente no exemplo acima seria o 4 e a variável valorIgual no
+        // exemplo seria o 80.
 
         double coeficiente = (matrizTres[0][0] * matrizTres[1][1]) - (matrizTres[1][0] * matrizTres[0][1]);
-        double valorIgual =  (matrizTres[0][0] * matrizTres[1][2]) - (matrizTres[1][0] * matrizTres[0][2]);
+        double valorIgual = (matrizTres[0][0] * matrizTres[1][2]) - (matrizTres[1][0] * matrizTres[0][2]);
 
         // Verifica se o sistema linear é indeterminado.
-        if (coeficiente == 0 && valorIgual == 0)
-        {
+        if (coeficiente == 0 && valorIgual == 0) {
             System.out.println("O sistema linear eh indeterminado.");
             return;
         }
@@ -62,34 +65,46 @@ public class Calculadora{
 
         double z = valorIgual / coeficiente;
 
-        // Para descobrir o valor de Y, basta substituir o Z em uma das equações da matrizTres.
-        // Cada linha da matrizTres é uma equação de duas incógnitas. As incógnitas são Y e Z.
-        // Os valores nas duas primeiras colunas da matrizTres são coeficientes de incógnitas. A última coluna contém valores de igualdade.
+        // Para descobrir o valor de Y, basta substituir o Z em uma das equações da
+        // matrizTres.
+        // Cada linha da matrizTres é uma equação de duas incógnitas. As incógnitas são
+        // Y e Z.
+        // Os valores nas duas primeiras colunas da matrizTres são coeficientes de
+        // incógnitas. A última coluna contém valores de igualdade.
 
-        // Uma linha da matrizTres foi escolhida pelo programador para descobrir o valor de Y.
-        // A operação abaixo é uma resolução de uma equação de primeiro grau. A incógnita Z foi substituida pelo seu valor e multiplicou pelo seu coeficiente na equação.
+        // Uma linha da matrizTres foi escolhida pelo programador para descobrir o valor
+        // de Y.
+        // A operação abaixo é uma resolução de uma equação de primeiro grau. A
+        // incógnita Z foi substituida pelo seu valor e multiplicou pelo seu coeficiente
+        // na equação.
         // Exemplo: A equação era 3Y + 9Z = 15
         // Se o valor de Z é 2, substituindo fica: 3Y + 9 * 2 = 15
         // 3Y + 18 = 15
-        // Em seguida, o resultado dessa multiplicação passou para o outro lado do sinal de igual, subtraindo o valor da igualdade pelo resultado da multiplicação.
+        // Em seguida, o resultado dessa multiplicação passou para o outro lado do sinal
+        // de igual, subtraindo o valor da igualdade pelo resultado da multiplicação.
         // 3Y = 15 -18
         // 3Y = -3
         // Então, 3 estava multiplicando com Y, passou a dividir:
         // Y = -3 / 3
         // Y = -1
-        // O comando abaixo simplesmente isola o Y e faz todas as operações descritas acima.
-        // matrizTres[0][2] seria o 15 do exemplo. matrizTres[0][1] seria o 9 do exemplo. matrizTres[0][0] seria o 3 do exemplo.
+        // O comando abaixo simplesmente isola o Y e faz todas as operações descritas
+        // acima.
+        // matrizTres[0][2] seria o 15 do exemplo. matrizTres[0][1] seria o 9 do
+        // exemplo. matrizTres[0][0] seria o 3 do exemplo.
         double y = ((matrizTres[0][2]) - (z * matrizTres[0][1])) / matrizTres[0][0];
 
-        // Para descobir o valor de X, basta escolher uma das equações da matrizDois e substituir o Y e o Z.
+        // Para descobir o valor de X, basta escolher uma das equações da matrizDois e
+        // substituir o Y e o Z.
         // Vale lembrar que cada linha de uma matriz é uma equação.
 
         double x = ((matrizDois[0][3]) - (z * matrizDois[0][2]) - (y * matrizDois[0][1])) / matrizDois[0][0];
 
-        // Agora precisa substituir os valores de X, Y e Z em uma das equações da matriz recebida por parâmetro para descobrir o W.
+        // Agora precisa substituir os valores de X, Y e Z em uma das equações da matriz
+        // recebida por parâmetro para descobrir o W.
 
         double w = ((matriz[0][4]) - (z * matriz[0][3]) - (y * matriz[0][2]) - (x * matriz[0][1])) / matriz[0][0];
-        // O programador escolheu apenas as primeiras linhas de cada matriz, mas poderia ter sido qualquer linha (qualquer equação) para substituir os valores.
+        // O programador escolheu apenas as primeiras linhas de cada matriz, mas poderia
+        // ter sido qualquer linha (qualquer equação) para substituir os valores.
 
         System.out.println();
 
@@ -100,52 +115,48 @@ public class Calculadora{
         System.out.println();
     }
 
-    public static void imprimeSistemaLinear(double[][] matriz)
-    {
+    public static void imprimeSistemaLinear(double[][] matriz) {
         System.out.println();
         System.out.println("Esse eh o sistema linear:");
         System.out.println();
         System.out.println();
-        
-        for (int linha = 0; linha < 4; linha++)
-                    {
-                        for (int coluna = 0; coluna < 5; coluna++)
-                        {
-                            switch (coluna)
-                            {
-                                case 0:
-                                System.out.print(matriz[linha][coluna] + "W ");
-                                
-                                break;
 
-                                case 1:
-                                System.out.print(matriz[linha][coluna] + "X ");
-                                
-                                break;
+        for (int linha = 0; linha < 4; linha++) {
+            for (int coluna = 0; coluna < 5; coluna++) {
+                switch (coluna) {
+                    case 0:
+                        System.out.print(matriz[linha][coluna] + "W ");
 
-                                case 2:
-                                System.out.print(matriz[linha][coluna] + "Y ");
-                                
-                                break;
+                        break;
 
-                                case 3:
-                                System.out.print(matriz[linha][coluna] + "Z ");
-                                
-                                break;
+                    case 1:
+                        System.out.print(matriz[linha][coluna] + "X ");
 
-                                case 4:
-                                System.out.print("= " + matriz[linha][coluna]);
-                                
-                                break;
-                            }
-                        }
-                        System.out.println(); // talvez não deveria ser aqui esse comando.
-                    }
+                        break;
+
+                    case 2:
+                        System.out.print(matriz[linha][coluna] + "Y ");
+
+                        break;
+
+                    case 3:
+                        System.out.print(matriz[linha][coluna] + "Z ");
+
+                        break;
+
+                    case 4:
+                        System.out.print("= " + matriz[linha][coluna]);
+
+                        break;
+                }
+            }
+            System.out.println(); // talvez não deveria ser aqui esse comando.
+        }
     }
 
-    /// Essa função calcula o índice de massa corporal, indicador reconhecido pela OMS.
-    public static void calculaIMC(double massa, double altura)
-    {
+    /// Essa função calcula o índice de massa corporal, indicador reconhecido pela
+    /// OMS.
+    public static void calculaIMC(double massa, double altura) {
         double imc = massa / (altura * altura);
 
         if (imc < 17)
@@ -153,10 +164,10 @@ public class Calculadora{
 
         else if (imc >= 17 && imc <= 18.49)
             System.out.println("Seu IMC eh " + imc + " kg/m2. Voce esta abaixo do peso.");
-        
+
         else if (imc >= 18.5 && imc <= 24.99)
             System.out.println("Seu IMC eh " + imc + " kg/m2. Voce esta com peso normal.");
-        
+
         else if (imc >= 25 && imc <= 29.99)
             System.out.println("Seu IMC eh " + imc + " kg/m2. Voce esta um pouco acima do peso.");
 
@@ -166,62 +177,59 @@ public class Calculadora{
         else if (imc >= 35 && imc <= 39.99)
             System.out.println("Seu IMC eh " + imc + " kg/m2. Voce esta na obesidade II.");
 
-        else 
+        else
             System.out.println("Seu IMC eh" + imc + " kg/m2. " + "Voce esta na obesidade III.");
     }
 
     /// Essa função calcula rendimentos a juros simples.
-    public static double[] calculaJuros(double taxa, int periodo, int quantidadeTempo, double valorAplicado)
-    {
-        // As funções anteriores foram todas void. Nessa função eu resolvi retornar alguma coisa.
+    public static double[] calculaJuros(double taxa, int periodo, int quantidadeTempo, double valorAplicado) {
+        // As funções anteriores foram todas void. Nessa função eu resolvi retornar
+        // alguma coisa.
         // Vou retornar um vetor double que vai guardar duas informações:
         // dados[0] = O dinheiro final depois de um tempo rendendo;
-        // dados[1] = O quanto de dinheiro total rendeu desde quando o rendimento começou. É o rendimento total.
+        // dados[1] = O quanto de dinheiro total rendeu desde quando o rendimento
+        // começou. É o rendimento total.
         double[] dados = new double[2];
 
         // É necessário dividir a taxa por 100 para poder fazer as contas
         taxa = taxa / 100;
 
         // FV é o valor final após um período rendendo a juros simples.
-        double fv = 0;       
-               
+        double fv = 0;
+
         // Fórmula de juros simples
-        fv = valorAplicado * (1 + taxa * quantidadeTempo);       
-            
+        fv = valorAplicado * (1 + taxa * quantidadeTempo);
+
         dados[0] = fv;
-        dados[1] = fv - valorAplicado; 
-        
+        dados[1] = fv - valorAplicado;
+
         return dados;
     }
 
-    public static double calculaCorrente(double t, double r)
-    {
+    public static double calculaCorrente(double t, double r) {
         return t / r;
     }
 
-    public static double calculaResistencia(double tensao, double corrente)
-    {
+    public static double calculaResistencia(double tensao, double corrente) {
         return tensao / corrente;
     }
 
-    public static double calculaTensao(double resistencia, double corrente)
-    {
+    public static double calculaTensao(double resistencia, double corrente) {
         return resistencia * corrente;
     }
 
-    /// Essa função calcula o quanto de energia um objeto elétrico (ex: uma lâmpada) consome em kWh e o quanto esse objeto custa em dinheiro após um mês de uso.
-    public static void calculaCustoEletricidade()
-    {
+    /// Essa função calcula o quanto de energia um objeto elétrico (ex: uma lâmpada)
+    /// consome em kWh e o quanto esse objeto custa em dinheiro após um mês de uso.
+    public static void calculaCustoEletricidade() {
         double tarifa, potencia, energia, custo;
         int horas;
         boolean excecao = true;
         Scanner s = new Scanner(System.in);
-        do
-        {
-            try{
+        do {
+            try {
                 System.out.println("Quanto ta a tarifa do kWh? (A cada 1 kWh que voce consome, voce paga quanto?)");
                 tarifa = Double.parseDouble(s.nextLine());
-                
+
                 System.out.println("Qual eh a potencia em Watts do objeto?");
                 potencia = Double.parseDouble(s.nextLine());
 
@@ -236,58 +244,105 @@ public class Calculadora{
                 // Potência (W) = Energia (J) / Tempo (s)
                 // Energia (kWh) = Potência (W) * Tempo (h)
                 energia = potencia * horas;
-                custo = energia *tarifa;
-
+                custo = energia * tarifa;
+                custo = custo * 30;
                 System.out.println("Com esse objeto voce gasta R$ " + custo + " por mes.");
                 s.close();
 
-
             }
 
-            catch(NumberFormatException e)
-            {
+            catch (NumberFormatException e) {
                 excecao = true;
                 System.out.println("Invalido.");
             }
 
-        }while(excecao == true);
+        } while (excecao == true);
 
     }
-    
 
-    public static void calculaCargaCapacitor()
-    {
-        int carga, tensao, capacitancia;
+    public static double log(double base, double valor) {
+        return Math.log(valor) / Math.log(base);
+    }
+
+    public static void calculaCargaCapacitor() {
+        int carga, tensao, capacitancia, resistencia, tensaoNaFonte;
+        double tempo;
         boolean excecao = true;
         Scanner s = new Scanner(System.in);
-        do
-        {
-            try
-            {
+        do {
+            try {
                 System.out.println("Digite a carga eletrica armazenada em coulombs(C): ");
                 carga = Integer.parseInt(s.nextLine());
 
-                System.out.println("Digite a tensao: ");
+                System.out.println("Digite a tensao no capacitor: ");
                 tensao = Integer.parseInt(s.nextLine());
 
-                capacitancia = carga/tensao;
-                System.out.println("Sua capacitância é: "+ capacitancia);
-                s.close();
-                excecao = false;
+                capacitancia = carga / tensao;
+                System.out.println("Sua capacitancia eh: " + capacitancia);
 
+                System.out.println("Digite a resistencia: ");
+                resistencia = Integer.parseInt(s.nextLine());
 
-            }
-            catch(Exception e)
-            {
+                System.out.println("Digite a tensao na fonte:");
+                tensaoNaFonte = Integer.parseInt(s.nextLine());
+
+                double rc = capacitancia * resistencia;
+                tempo = log(Math.E, (tensao / tensaoNaFonte) - 1) * rc;
+
+                System.out.println("O tempo para que a carga no capacitor se complete eh de " + tempo + "s.");
+
+                excecao = false;               
+
+            } catch (Exception e) {
                 excecao = true;
                 System.out.println("Invalido.");
             }
-        }while(excecao == true);
+        } while (excecao == true);
+        s.close();
     }
 
-    public static void calculaDescargaCapacitor()
-    {
-        
+    public static void calculaDescargaCapacitor() {
+        double tensao, capacitancia, resistencia, tensaoNaFonte;
+        double tempo;
+        boolean excecao = true;
+        Scanner s = new Scanner(System.in);
+        do {
+            try {
+                System.out.println("Digite a capacitancia: ");
+                capacitancia = Double.parseDouble(s.nextLine());
+
+                System.out.println("Digite a tensao no capacitor: ");
+                tensao = Double.parseDouble(s.nextLine());
+               
+                System.out.println("Digite a resistencia: ");
+                resistencia = Double.parseDouble(s.nextLine());
+
+                System.out.println("Digite a tensao na fonte:");
+                tensaoNaFonte = Double.parseDouble(s.nextLine());
+
+                double rc = capacitancia * resistencia;
+                tempo = log(Math.E, (tensao / tensaoNaFonte) - 1) * rc;
+
+                System.out.println("O tempo para que a descarga no capacitor se complete eh de " + tempo + "s.");
+
+                excecao = false;               
+
+            } catch (Exception e) {
+                excecao = true;
+                System.out.println("Invalido.");
+            }
+        } while (excecao == true);
+        s.close();
+    }
+
+    /// Função recursiva que calcula o fatorial de um número
+    public static long fat_recursivo(int numero) {
+        if (numero == 0)
+            return 1;
+        else if (numero >= 2)
+            return numero * fat_recursivo(numero - 1);
+        else
+            return numero;
     }
 
     public static void converterDistancia(){
@@ -322,6 +377,7 @@ public class Calculadora{
             }
         }while(opcao != 1 || opcao != 2 || opcao != 3);
     }
+
     public static void converterMassa(){
         boolean correto = false;
         int opcao = 0;
@@ -388,18 +444,16 @@ public class Calculadora{
             }
         }while(opcao != 1 || opcao != 2 || opcao != 3);
     }
-    
-    public static void menuCalculos()
-    {
-        boolean correto = false;        
+
+    public static void menuCalculos() {
+        boolean correto = false;
         int opcao;
         Scanner s = new Scanner(System.in);
-        
-        do{
-            try{
-                do{
+
+        do {
+            try {
+                do {
                     System.out.println();
-                    System.out.println("Menu cálculos");
                     System.out.println("1- Resolucao de um sistema linear pelo dispositivo pratico de Gauss");
                     System.out.println("2- Calculo de IMC");
                     System.out.println("3- Calculo de juros simples");
@@ -412,259 +466,269 @@ public class Calculadora{
                     System.out.println("10- Calculo de descarga de um capacitor");
                     System.out.println("11- Calculo de fatorial");
                     System.out.println("50 - Sair");
-                    System.out.println("Por favor, sempre role para cima (no terminal) para ver o resultado de um calculo.");
+                    System.out.println(
+                            "Por favor, sempre role para cima (no terminal) para ver o resultado de um calculo.");
                     opcao = Integer.parseInt(s.nextLine());
                     correto = true;
 
-                    switch(opcao){
+                    switch (opcao) {
 
                         case 1:
-                        System.out.println("O sistema linear deve possuir 4 equacoes, sendo que cada equacao possui 4 incognitas.");
-                        System.out.println("Exemplo: \n 3W - 4X + 8Y - 5Z = 3 \n 2W - 5X + 6Y - 27Z = 52 \n 8W + 3X + 19Y - 36Z = 31 \n 7W - 6X - 4Y + 3Z = 9");
-                        System.out.println();
-                        double[][] matriz = new double[4][5];
-                        int contaEquacao = 1;
+                            System.out.println(
+                                    "O sistema linear deve possuir 4 equacoes, sendo que cada equacao possui 4 incognitas.");
+                            System.out.println(
+                                    "Exemplo: \n 3W - 4X + 8Y - 5Z = 3 \n 2W - 5X + 6Y - 27Z = 52 \n 8W + 3X + 19Y - 36Z = 31 \n 7W - 6X - 4Y + 3Z = 9");
+                            System.out.println();
+                            double[][] matriz = new double[4][5];
+                            int contaEquacao = 1;
 
-                        for (int linha = 0; linha < 4; linha++)
-                        {
-                            System.out.println(contaEquacao + "a. equacao.");
-                            for (int coluna = 0; coluna < 5; coluna++)
-                            {
-                                switch (coluna)
-                                {
-                                    case 0:
-                                    System.out.println("Digite um valor que multiplique por W.");
-                                    matriz[linha][coluna] = Double.parseDouble(s.nextLine());
-                                    System.out.println();
-                                    break;
+                            for (int linha = 0; linha < 4; linha++) {
+                                System.out.println(contaEquacao + "a. equacao.");
+                                for (int coluna = 0; coluna < 5; coluna++) {
+                                    switch (coluna) {
+                                        case 0:
+                                            System.out.println("Digite um valor que multiplique por W.");
+                                            matriz[linha][coluna] = Double.parseDouble(s.nextLine());
+                                            System.out.println();
+                                            break;
 
-                                    case 1:
-                                    System.out.println("Digite um valor que multiplique por X.");
-                                    matriz[linha][coluna] = Double.parseDouble(s.nextLine());
-                                    System.out.println();
-                                    break;
+                                        case 1:
+                                            System.out.println("Digite um valor que multiplique por X.");
+                                            matriz[linha][coluna] = Double.parseDouble(s.nextLine());
+                                            System.out.println();
+                                            break;
 
-                                    case 2:
-                                    System.out.println("Digite um valor que multiplique por Y.");
-                                    matriz[linha][coluna] = Double.parseDouble(s.nextLine());
-                                    System.out.println();
-                                    break;
+                                        case 2:
+                                            System.out.println("Digite um valor que multiplique por Y.");
+                                            matriz[linha][coluna] = Double.parseDouble(s.nextLine());
+                                            System.out.println();
+                                            break;
 
-                                    case 3:
-                                    System.out.println("Digite um valor que multiplique por Z.");
-                                    matriz[linha][coluna] = Double.parseDouble(s.nextLine());
-                                    System.out.println();
-                                    break;
+                                        case 3:
+                                            System.out.println("Digite um valor que multiplique por Z.");
+                                            matriz[linha][coluna] = Double.parseDouble(s.nextLine());
+                                            System.out.println();
+                                            break;
 
-                                    case 4:
-                                    System.out.println("Digite um valor apos o sinal de igual da equacao.");
-                                    matriz[linha][coluna] = Double.parseDouble(s.nextLine());
-                                    System.out.println();
-                                    break;
+                                        case 4:
+                                            System.out.println("Digite um valor apos o sinal de igual da equacao.");
+                                            matriz[linha][coluna] = Double.parseDouble(s.nextLine());
+                                            System.out.println();
+                                            break;
+                                    }
                                 }
+                                contaEquacao++;
                             }
-                            contaEquacao++;
-                        }
-                        imprimeSistemaLinear(matriz);
-                        calculaGauss(matriz);
-                        break;
+                            imprimeSistemaLinear(matriz);
+                            calculaGauss(matriz);
+                            break;
 
                         case 2:
-                        double massa, altura;
-                        System.out.println("Digite a massa:");
-                        massa = Double.parseDouble(s.nextLine());
-                        System.out.println("Digite a altura:");
-                        altura = Double.parseDouble(s.nextLine());
-                        calculaIMC(massa, altura);
-                        break;
+                            double massa, altura;
+                            System.out.println("Digite a massa:");
+                            massa = Double.parseDouble(s.nextLine());
+                            System.out.println("Digite a altura:");
+                            altura = Double.parseDouble(s.nextLine());
+                            calculaIMC(massa, altura);
+                            break;
 
                         case 3:
-                        // taxa é taxa de juros. Vp é valor aplicado para render. Periodo é de quanto em quanto tempo rende (ao ano, ao mês, ao dia).
-                        double taxa, vp;
-                        int periodo;
-                        int qtdTempo;
-                        boolean execao = true;
-                        System.out.println("Calculo de juros simples sobre o valor aplicado.");
-                        System.out.println("Digite a taxa de juros (em porcentagem, sem o simbolo de percentual '%'. Exemplo: 2.9)");
-                        taxa = Double.parseDouble(s.nextLine());
+                            // taxa é taxa de juros. Vp é valor aplicado para render. Periodo é de quanto em
+                            // quanto tempo rende (ao ano, ao mês, ao dia).
+                            double taxa, vp;
+                            int periodo;
+                            int qtdTempo;
+                            boolean execao = true;
+                            System.out.println("Calculo de juros simples sobre o valor aplicado.");
+                            System.out.println(
+                                    "Digite a taxa de juros (em porcentagem, sem o simbolo de percentual '%'. Exemplo: 2.9)");
+                            taxa = Double.parseDouble(s.nextLine());
 
-                        do {
-                        
-                            try{
+                            do {
 
-                                do {
-                                    System.out.println("A taxa de juros eh \n 1- ao ano \n 2- ao mes \n 3- ao dia");
-                                    periodo = Integer.parseInt(s.nextLine());
+                                try {
 
-                                    System.out.println("Digite a quantidade de tempo em que o valor aplicado vai render.");
-                                    System.out.println("(Se voce escolheu ano como periodo, entao sera a quantidade de anos. Se voce escolheu mes, sera a quantidade de meses).");
-                                    qtdTempo = Integer.parseInt(s.nextLine());
-                                    execao = false;
+                                    do {
+                                        System.out.println("A taxa de juros eh \n 1- ao ano \n 2- ao mes \n 3- ao dia");
+                                        periodo = Integer.parseInt(s.nextLine());
 
-                                    System.out.println("Digite o valor aplicado para render com juros simples");
-                                    vp = Double.parseDouble(s.nextLine());
+                                        System.out.println(
+                                                "Digite a quantidade de tempo em que o valor aplicado vai render.");
+                                        System.out.println(
+                                                "(Se voce escolheu ano como periodo, entao sera a quantidade de anos. Se voce escolheu mes, sera a quantidade de meses).");
+                                        qtdTempo = Integer.parseInt(s.nextLine());
+                                        execao = false;
 
-                                    double[] resultados = calculaJuros(taxa, periodo, qtdTempo, vp);
+                                        System.out.println("Digite o valor aplicado para render com juros simples");
+                                        vp = Double.parseDouble(s.nextLine());
 
-                                    if (periodo == 1)
-                                    {
-                                        System.out.println("Daqui a " + qtdTempo + " anos voce tera R$ " + resultados[0]);
-                                        System.out.println("O dinheiro rendido ate la sera de R$ " + resultados[1] + ".");
-                                    }
+                                        double[] resultados = calculaJuros(taxa, periodo, qtdTempo, vp);
 
-                                    else if (periodo == 2)
-                                    {
-                                        System.out.println("Daqui a " + qtdTempo + " meses voce tera R$ " + resultados[0]);
-                                        System.out.println("O dinheiro rendido ate la sera de R$ " + resultados[1] + ".");
-                                    }
+                                        if (periodo == 1) {
+                                            System.out.println(
+                                                    "Daqui a " + qtdTempo + " anos voce tera R$ " + resultados[0]);
+                                            System.out.println(
+                                                    "O dinheiro rendido ate la sera de R$ " + resultados[1] + ".");
+                                        }
 
-                                    else
-                                    {
-                                        System.out.println("Daqui a " + qtdTempo + " dias voce tera R$ " + resultados[0]);
-                                        System.out.println("O dinheiro rendido ate la sera de R$ " + resultados[1] + ".");
-                                    }
+                                        else if (periodo == 2) {
+                                            System.out.println(
+                                                    "Daqui a " + qtdTempo + " meses voce tera R$ " + resultados[0]);
+                                            System.out.println(
+                                                    "O dinheiro rendido ate la sera de R$ " + resultados[1] + ".");
+                                        }
 
-                                }while(periodo < 1 || periodo > 3 || vp < 0);
-                            }
+                                        else {
+                                            System.out.println(
+                                                    "Daqui a " + qtdTempo + " dias voce tera R$ " + resultados[0]);
+                                            System.out.println(
+                                                    "O dinheiro rendido ate la sera de R$ " + resultados[1] + ".");
+                                        }
 
-                            catch (NumberFormatException ex)
-                            {
-                                execao = true;
-                                System.out.println("Invalido.");
-                            }
-                        }while(execao == true);
-                        break;
+                                    } while (periodo < 1 || periodo > 3 || vp < 0);
+                                }
+
+                                catch (NumberFormatException ex) {
+                                    execao = true;
+                                    System.out.println("Invalido.");
+                                }
+                            } while (execao == true);
+                            break;
 
                         case 4:
-                        double tensao, resistencia;
+                            double tensao, resistencia;
 
-                        System.out.println("Digite a tensao:");
-                        tensao = Double.parseDouble(s.nextLine());
+                            System.out.println("Digite a tensao:");
+                            tensao = Double.parseDouble(s.nextLine());
 
-                        System.out.println("Digite a resistencia:");
-                        resistencia = Double.parseDouble(s.nextLine());
+                            System.out.println("Digite a resistencia:");
+                            resistencia = Double.parseDouble(s.nextLine());
 
-                        double corrente = calculaCorrente(tensao, resistencia);
+                            double corrente = calculaCorrente(tensao, resistencia);
 
-                        System.out.println("A corrente e " + corrente + "A");
+                            System.out.println("A corrente e " + corrente + "A");
 
-                        break;
-                        
+                            break;
+
                         case 5:
-                        double r, t, c;
+                            double r, t, c;
 
-                        System.out.println("Digite a resistencia:");
-                        r = Double.parseDouble(s.nextLine());
+                            System.out.println("Digite a resistencia:");
+                            r = Double.parseDouble(s.nextLine());
 
-                        System.out.println("Digite a corrente:");
-                        c = Double.parseDouble(s.nextLine());
+                            System.out.println("Digite a corrente:");
+                            c = Double.parseDouble(s.nextLine());
 
-                        t = calculaTensao(r, c);
+                            t = calculaTensao(r, c);
 
-                        System.out.println("A tensao eh " + t + "V");
+                            System.out.println("A tensao eh " + t + "V");
 
-                        break;
+                            break;
 
                         case 6:
-                        double res, ten, cor;
+                            double res, ten, cor;
 
-                        System.out.println("Digite a tensao:");
-                        ten = Double.parseDouble(s.nextLine());
+                            System.out.println("Digite a tensao:");
+                            ten = Double.parseDouble(s.nextLine());
 
-                        System.out.println("Digite a corrente:");
-                        cor = Double.parseDouble(s.nextLine());
+                            System.out.println("Digite a corrente:");
+                            cor = Double.parseDouble(s.nextLine());
 
-                        res = calculaResistencia(ten, cor);
+                            res = calculaResistencia(ten, cor);
 
-                        System.out.println("A resistencia eh " + res + "Ohms");
+                            System.out.println("A resistencia eh " + res + "Ohms");
 
-                        break;
+                            break;
 
                         case 7:
-                        
-                        double potenciaEletrica, resistenciaEletrica, tensaoEletrica, correnteEletrica;
 
-                        System.out.println("Possui tensao eletrica? [S/N]");
-                        String tensaoEletro = s.nextLine();
+                            double potenciaEletrica, resistenciaEletrica, tensaoEletrica, correnteEletrica;
 
-                        System.out.println("Possui corrente eletrica? [S/N]");
-                        String correnteEletro = s.nextLine();
+                            System.out.println("Possui tensao eletrica? [S/N]");
+                            String tensaoEletro = s.nextLine();
 
-                        System.out.println("Possui resistencia eletrica? [S/N]");
-                        String resistenciaEletro = s.nextLine();
-                        
-                        if (tensaoEletro.toUpperCase().trim() == "S" && correnteEletro.toUpperCase().trim() == "S")
-                        {
-                            System.out.println("Informe a tensao:");
-                            tensaoEletrica = Double.parseDouble(s.nextLine());
+                            System.out.println("Possui corrente eletrica? [S/N]");
+                            String correnteEletro = s.nextLine();
 
-                            System.out.println("Informe a corrente:");
-                            correnteEletrica = Double.parseDouble(s.nextLine());
+                            System.out.println("Possui resistencia eletrica? [S/N]");
+                            String resistenciaEletro = s.nextLine();
 
-                            potenciaEletrica = tensaoEletrica * correnteEletrica;
+                            if (tensaoEletro.toUpperCase().trim() == "S"
+                                    && correnteEletro.toUpperCase().trim() == "S") {
+                                System.out.println("Informe a tensao:");
+                                tensaoEletrica = Double.parseDouble(s.nextLine());
 
-                            System.out.println("A potencia eh de " + potenciaEletrica + "W");
-                        }
+                                System.out.println("Informe a corrente:");
+                                correnteEletrica = Double.parseDouble(s.nextLine());
 
-                        else if (tensaoEletro.toUpperCase().trim() == "S" && resistenciaEletro.toUpperCase().trim() == "S")
-                        {
-                            System.out.println("Informe a tensao:");
-                            tensaoEletrica = Double.parseDouble(s.nextLine());
+                                potenciaEletrica = tensaoEletrica * correnteEletrica;
 
-                            System.out.println("Informe a resistencia:");
-                            resistenciaEletrica = Double.parseDouble(s.nextLine());
+                                System.out.println("A potencia eh de " + potenciaEletrica + "W");
+                            }
 
-                            potenciaEletrica = (tensaoEletrica * tensaoEletrica) / resistenciaEletrica;
-                            System.out.println("A potencia eh de " + potenciaEletrica + "W");
-                        }
+                            else if (tensaoEletro.toUpperCase().trim() == "S"
+                                    && resistenciaEletro.toUpperCase().trim() == "S") {
+                                System.out.println("Informe a tensao:");
+                                tensaoEletrica = Double.parseDouble(s.nextLine());
 
-                        else if (resistenciaEletro.toUpperCase().trim() == "S" && correnteEletro.toUpperCase().trim() == "S")
-                        {
-                            System.out.println("Informe a resistencia:");
-                            resistenciaEletrica = Double.parseDouble(s.nextLine());
+                                System.out.println("Informe a resistencia:");
+                                resistenciaEletrica = Double.parseDouble(s.nextLine());
 
-                            System.out.println("Informe a corrente:");
-                            correnteEletrica = Double.parseDouble(s.nextLine());
+                                potenciaEletrica = (tensaoEletrica * tensaoEletrica) / resistenciaEletrica;
+                                System.out.println("A potencia eh de " + potenciaEletrica + "W");
+                            }
 
-                            potenciaEletrica = resistenciaEletrica * (correnteEletrica * correnteEletrica);
-                            System.out.println("A potencia eh de " + potenciaEletrica + "W");
-                        }
+                            else if (resistenciaEletro.toUpperCase().trim() == "S"
+                                    && correnteEletro.toUpperCase().trim() == "S") {
+                                System.out.println("Informe a resistencia:");
+                                resistenciaEletrica = Double.parseDouble(s.nextLine());
 
-                        else
-                        {
-                            System.out.println("Informacao insuficiente para calcular a potencia eletrica.");
-                        }
-                        break;
+                                System.out.println("Informe a corrente:");
+                                correnteEletrica = Double.parseDouble(s.nextLine());
+
+                                potenciaEletrica = resistenciaEletrica * (correnteEletrica * correnteEletrica);
+                                System.out.println("A potencia eh de " + potenciaEletrica + "W");
+                            }
+
+                            else {
+                                System.out.println("Informacao insuficiente para calcular a potencia eletrica.");
+                            }
+                            break;
 
                         case 8:
-                        calculaCustoEletricidade();
-                        break;
-                        
+                            calculaCustoEletricidade();
+                            break;
+
                         case 9:
-                        calculaCargaCapacitor();
-                        break;
+                            calculaCargaCapacitor();
+                            break;
 
                         case 10:
-                        //calculaDescargaCapacitor();
-                        break;
+                            calculaDescargaCapacitor();
+                            break;
 
+                        case 11:
+                            System.out.println("Digite um numero para calcular o fatorial");
+                            int n = Integer.parseInt(s.nextLine());
+                            long resultado = fat_recursivo(n);
+                            System.out.println("Resultado: " + resultado);
+                            break;
 
                     }
 
-                }while(opcao != 50);
+                } while (opcao != 50);
                 s.close();
-            }              
-            
-            catch (NumberFormatException ex){
+            }
+
+            catch (NumberFormatException ex) {
                 correto = false;
                 System.out.println("Por favor, digite somente numeros. Para opcao, digite apenas numeros inteiros.");
             }
 
-        }while(correto == false);
+        } while (correto == false);
     }
 
-    public static void menuConversoes()
-    {
+    public static void menuConversoes() {
         boolean correto = false;        
         int opcao= 0;
         Scanner s = new Scanner(System.in);
@@ -705,12 +769,12 @@ public class Calculadora{
 
     public static void main(String[] args) {
         boolean correto = false;
-        int opcao;
+        int opcao = 0;
         Scanner s = new Scanner(System.in);
         System.out.println("##CALCULADORA SOFISTICADA##");
 
-        do{
-            try{
+        do {
+            try {
 
                 System.out.println();
                 System.out.println("1- Fazer calculos");
@@ -720,22 +784,20 @@ public class Calculadora{
 
                 if (opcao == 1)
                     menuCalculos();
-        
-                else
-                    menuConversoes();
-                s.close();
 
+                else
+                    menuConversoes();               
             }
 
-            catch(NumberFormatException ex){
-                
+            catch (NumberFormatException ex) {
+
                 correto = false;
                 System.out.println("Opção inválida. Por favor, digite somente números inteiros.");
-                
+
             }
 
-        }while(correto == false);
-    } 
+        } while (correto == false || opcao < 1 || opcao > 2);
+        s.close();
+    }
 
-          
 }
