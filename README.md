@@ -2,6 +2,7 @@
 Calculadora para resolver sistemas lineares por Gauss, fazer contas que envolvem eletricidade aplicada, conversões de unidades de medida, cálculo de IMC, fatorial e juros simples.
  Gabriel Alves 081190038
  Giovanni Médici 081190005
+ Carlos Alexandre 081190017
  
  sistema para testar na calculadora:
  
