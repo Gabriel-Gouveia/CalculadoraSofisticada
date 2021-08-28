@@ -253,6 +253,7 @@ public class Calculadora{
         }while(excecao == true);
 
     }
+    
 
     public static void calculaCargaCapacitor()
     {
@@ -288,6 +289,105 @@ public class Calculadora{
     {
         
     }
+
+    public static void converterDistancia(){
+        boolean correto = false;
+        int opcao = 0;
+        Scanner s = new Scanner(System.in);
+        do{
+            System.out.println("Qual conversão você deseja fazer?");
+            System.out.println("1- metros para jardas");
+            System.out.println("2- jardas para metros");
+            System.out.println("3- menu pricipal");
+            opcao = Integer.parseInt(s.nextLine());
+            switch(opcao){
+                case 1:
+                System.out.println("Digite o valor em metros: ");
+                double metros = Double.parseDouble(s.nextLine());
+                double jardas = metros * 1.09361;
+                System.out.println("Seu valor em jardas é de "+ jardas);
+                break;
+                
+                case 2:
+                System.out.println("Digite o valor em jardas: ");
+                jardas = Double.parseDouble(s.nextLine());
+                metros = jardas * 0.9144;
+                System.out.println("Seu valor em metros é de: "+ metros);
+                break;
+
+                case 3:
+                menuConversoes();
+                break;
+
+            }
+        }while(opcao != 1 || opcao != 2 || opcao != 3);
+    }
+    public static void converterMassa(){
+        boolean correto = false;
+        int opcao = 0;
+        Scanner s = new Scanner(System.in);
+        do{
+            System.out.println("Qual conversão você deseja fazer?");
+            System.out.println("1- quilos para libras");
+            System.out.println("2- libras para quilos");
+            System.out.println("3- menu pricipal");
+            opcao = Integer.parseInt(s.nextLine());
+            switch(opcao){
+                case 1:
+                System.out.println("Digite o valor em quilos: ");
+                double quilos = Double.parseDouble(s.nextLine());
+                double libras = quilos * 2.204620823516057;
+                System.out.println("Seu valor em libras é de "+ libras);
+                break;
+                
+                case 2:
+                System.out.println("Digite o valor em libras: ");
+                libras = Double.parseDouble(s.nextLine());
+                quilos = libras * 0.453592
+                ;
+                System.out.println("Seu valor em quilos é de: "+ quilos);
+                break;
+
+                case 3:
+                menuConversoes();
+                break;
+
+            }
+        }while(opcao != 1 || opcao != 2 || opcao != 3);
+    }
+
+    public static void converterPotencia(){
+        boolean correto = false;
+        int opcao = 0;
+        Scanner s = new Scanner(System.in);
+        do{
+            System.out.println("Qual conversão você deseja fazer?");
+            System.out.println("1- joules para W/h");
+            System.out.println("2- W/h para joules");
+            System.out.println("3- menu pricipal");
+            opcao = Integer.parseInt(s.nextLine());
+            switch(opcao){
+                case 1:
+                System.out.println("Digite o valor em joules: ");
+                double joules = Double.parseDouble(s.nextLine());
+                double wathora = joules * 0.277778;
+                System.out.println("Seu valor em W/h é de "+ wathora);
+                break;
+                
+                case 2:
+                System.out.println("Digite o valor em W/h: ");
+                wathora = Double.parseDouble(s.nextLine());
+                joules = wathora * 3.6 ;
+                System.out.println("Seu valor em joules é de: "+ joules);
+                break;
+
+                case 3:
+                menuConversoes();
+                break;
+
+            }
+        }while(opcao != 1 || opcao != 2 || opcao != 3);
+    }
     
     public static void menuCalculos()
     {
@@ -299,6 +399,7 @@ public class Calculadora{
             try{
                 do{
                     System.out.println();
+                    System.out.println("Menu cálculos");
                     System.out.println("1- Resolucao de um sistema linear pelo dispositivo pratico de Gauss");
                     System.out.println("2- Calculo de IMC");
                     System.out.println("3- Calculo de juros simples");
@@ -564,7 +665,42 @@ public class Calculadora{
 
     public static void menuConversoes()
     {
-        
+        boolean correto = false;        
+        int opcao= 0;
+        Scanner s = new Scanner(System.in);
+        do{
+            try{
+                
+                    System.out.println();
+                    System.out.println("Menu conversões: ");
+                    System.out.println("1- Distância");
+                    System.out.println("2- Massa");
+                    System.out.println("3- Potência");
+                    opcao = Integer.parseInt(s.nextLine());
+                    correto = true;
+                   switch(opcao){
+                       case 1:
+                       converterDistancia();
+                       break;
+
+                       case 2: 
+                       converterMassa();
+                       break;
+
+                       case 3:
+                       converterPotencia();
+                       break;
+                       
+                    
+                   }
+                   s.close();
+                
+            }
+            catch(NumberFormatException ex){
+                correto = false;
+                System.out.println("Por favor, digite somente numeros. Para opcao, digite apenas numeros inteiros.");
+            }
+        }while(correto == false);
     }
 
     public static void main(String[] args) {
